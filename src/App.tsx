@@ -33,8 +33,7 @@ function App() {
     setIcons,
     handleIconDragStart, 
     handleIconDragEnd, 
-    handleIconDrop, 
-    handleIconClick 
+    handleIconDrop,
   } = useIconManagement({ initialIcons })
   
   // Update reference items when language changes
@@ -101,7 +100,6 @@ function App() {
     toggleWindow, 
     handleWindowDragStart, 
     handleWindowDrag, 
-    handleWindowDrop,
     handleWindowResize,
     createWindow
   } = useWindowManagement({ initialWindows })

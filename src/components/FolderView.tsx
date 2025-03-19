@@ -36,11 +36,12 @@ interface FolderViewProps {
   enableIconDrag?: boolean
 }
 
-export const FolderView: FC<FolderViewProps> = ({ window, items, onClose, onItemClick, enableIconDrag = false }) => {
+export const FolderView: FC<FolderViewProps> = ({ items, onClose, onItemClick, enableIconDrag = false }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
   const [miniIcons, setMiniIcons] = useState<DesktopIconType[]>([])
   const [miniWindows, setMiniWindows] = useState<WindowType[]>([])
   
+  console.log(selectedItem)
   // Convert folder items to desktop icons
   useEffect(() => {
     // Calculate grid positions for icons (4 icons per row)

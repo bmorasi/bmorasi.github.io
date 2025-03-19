@@ -22,19 +22,34 @@ interface WindowProps {
   onResize?: (windowId: string, width: number, height: number) => void
 }
 
-export const Window: FC<WindowProps> = ({ window, onDragStart, onDrag, onClose, onResize }) => {
+// Type for resize directions
+type ResizeDirection = '' | 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
+
+// Type for position coordinates
+interface Position {
+  x: number;
+  y: number;
+}
+
+// Type for size dimensions
+interface Size {
+  width: number;
+  height: number;
+}
+
+export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) => {
   const [resizing, setResizing] = useState(false);
-  const [resizeDirection, setResizeDirection] = useState('');
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-  const [startSize, setStartSize] = useState({ width: 0, height: 0 });
-  const [startWindowPos, setStartWindowPos] = useState({ x: 0, y: 0 });
+  const [resizeDirection, setResizeDirection] = useState<ResizeDirection>('');
+  const [startPos, setStartPos] = useState<Position>({ x: 0, y: 0 });
+  const [startSize, setStartSize] = useState<Size>({ width: 0, height: 0 });
+  const [startWindowPos, setStartWindowPos] = useState<Position>({ x: 0, y: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
   
   // Set initial width and height based on window dimensions or defaults
   const width = window.width || 800;
   const height = window.height || 600;
   
-  const handleResizeStart = (e: React.MouseEvent, direction: string) => {
+  const handleResizeStart = (e: React.MouseEvent, direction: ResizeDirection) => {
     e.preventDefault();
     e.stopPropagation();
     
@@ -67,32 +82,26 @@ export const Window: FC<WindowProps> = ({ window, onDragStart, onDrag, onClose, 
     const deltaY = e.clientY - startPos.y;
     
     // Handle different resize directions
-    if (resizeDirection.includes('e')) {
-      newWidth = startSize.width + deltaX;
-    }
-    if (resizeDirection.includes('s')) {
-      newHeight = startSize.height + deltaY;
-    }
+    if (resizeDirection.includes('e')) newWidth = startSize.width + deltaX;
+    if (resizeDirection.includes('s')) newHeight = startSize.height + deltaY;
     if (resizeDirection.includes('w')) {
       newWidth = startSize.width - deltaX;
-      // Adjust position when resizing from left edge
-      newX = window.position.x + deltaX;
+      newX = startWindowPos.x + deltaX;
     }
     if (resizeDirection.includes('n')) {
       newHeight = startSize.height - deltaY;
-      // Adjust position when resizing from top edge
-      newY = window.position.y + deltaY;
+      newY = startWindowPos.y + deltaY;
     }
     
     // Apply minimum size constraints
     newWidth = Math.max(300, newWidth);
     newHeight = Math.max(200, newHeight);
     
-    // Calculate position adjustments to prevent window from moving when resizing
-    // from the right or bottom edges
+    // Calculate position adjustments
     const adjustedX = resizeDirection.includes('w') ? newX : window.position.x;
     const adjustedY = resizeDirection.includes('n') ? newY : window.position.y;
     
+    // Update window dimensions and position
     if (windowRef.current) {
       windowRef.current.style.width = `${newWidth}px`;
       windowRef.current.style.height = `${newHeight}px`;
@@ -104,28 +113,25 @@ export const Window: FC<WindowProps> = ({ window, onDragStart, onDrag, onClose, 
     if (onResize) {
       onResize(window.id, newWidth, newHeight);
       
-      // If position has changed, we need to update the parent component
+      // If position has changed, update the parent component
       if (adjustedX !== window.position.x || adjustedY !== window.position.y) {
-        // Update the window position in the DOM immediately
-        if (windowRef.current) {
-          windowRef.current.style.left = `${adjustedX}px`;
-          windowRef.current.style.top = `${adjustedY}px`;
-        }
-        
-        // Notify parent about position change
-          if (onDrag) {
-          // Create a synthetic event object instead of trying to cast a native DragEvent
-          const syntheticEvent = {
-            clientX: adjustedX,
-            clientY: adjustedY,
-            preventDefault: () => {},
-            stopPropagation: () => {}
-          } as unknown as React.DragEvent<Element>;
-          
-          onDrag(syntheticEvent, window.id);
-        }
+        notifyPositionChange(adjustedX, adjustedY);
       }
     }
+  };
+  
+  const notifyPositionChange = (x: number, y: number) => {
+    if (!onDrag) return;
+    
+    // Create a synthetic event object
+    const syntheticEvent = {
+      clientX: x,
+      clientY: y,
+      preventDefault: () => {},
+      stopPropagation: () => {}
+    } as unknown as React.DragEvent<Element>;
+    
+    onDrag(syntheticEvent, window.id);
   };
   
   const handleResizeEnd = () => {
@@ -142,7 +148,7 @@ export const Window: FC<WindowProps> = ({ window, onDragStart, onDrag, onClose, 
     };
   }, [resizing]);
   
-  // Handle window dragging via the header instead of the entire window
+  // Handle window dragging via the header
   const handleHeaderMouseDown = (e: React.MouseEvent) => {
     if (resizing) return;
     

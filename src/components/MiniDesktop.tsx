@@ -99,7 +99,7 @@ export const MiniDesktop = ({
         onWindowDrag={handleWindowDrag}
         onWindowClose={onWindowClose}
         onWindowResize={onWindowPositionUpdate ? 
-          (windowId, width, height) => {
+          (windowId) => {
             // Find the window to get its current position
             const window = windows.find(w => w.id === windowId);
             if (window) {

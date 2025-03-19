@@ -74,9 +74,6 @@ export const BaseDesktop = ({
     
     const window = windows.find(w => w.id === windowId)
     if (window) {
-      const rect = (e.target as HTMLElement).getBoundingClientRect()
-      const offsetX = e.clientX - rect.left
-      const offsetY = e.clientY - rect.top
       e.dataTransfer.setData('text/plain', windowId)
       
       if (onWindowDragStart) {
