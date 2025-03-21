@@ -129,7 +129,7 @@ export const translations: TranslationData = {
         "Principal Engineer @ Air Innovations",
         "+49777477047387 / fritjoff.buttner@aiir.nl"
       ]],
-      ["Gertie de Jong-Sinnighe", "", [
+      ["Gertie de Jong-Sinnige", "", [
         "Manager Identificatie en Verificatie",
         "KYC @ ING Bank",
         "+31622804750"
@@ -140,7 +140,7 @@ export const translations: TranslationData = {
         "Principal Engineer @ Air Innovations",
         "+49777477047387 / fritjoff.buttner@aiir.nl"
       ]],
-      ["Gertie de Jong-Sinnighe", "", [
+      ["Gertie de Jong-Sinnige", "", [
         "Manager Identificatie en Verificatie",
         "KYC @ ING Bank",
         "+31622804750"
