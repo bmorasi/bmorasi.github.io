@@ -48,7 +48,7 @@ export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, 
     };
     
     // For drag operations
-    const handleTouchMove = (moveEvent: TouchEvent) => {
+    const handleTouchMove = () => {
       // If we detect significant movement, cancel the click and start drag operation
       document.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('touchmove', handleTouchMove);

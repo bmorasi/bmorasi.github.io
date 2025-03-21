@@ -417,26 +417,22 @@ body {
 
 @keyframes typing {
   from { width: 0 }
-  to { width: fit-content }
-}
-
-.typing-effect {
-  overflow: hidden;
-  white-space: nowrap;
-  display: inline-block;
-  width: 0;
-  border-right: 2px solid transparent;
-  animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0 }
   to { width: 100% }
 }
 
 @keyframes blink-caret {
-  from, to { border-right-color: transparent }
-  50% { border-right-color: #0f0 }
+  50% { border-right-color: transparent }
+}
+
+.typewriter-text{ 
+  display: inline-block;
+  margin: 0 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #0f0;
+  border-right: .05em solid #0f0;
+  padding-right: 5px;
+  animation: blink-caret 0.75s step-end infinite;
 }
 
 .grid-item {

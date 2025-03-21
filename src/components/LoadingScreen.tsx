@@ -84,7 +84,7 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
         // Add confirmation message
         setExecutionOutput(prev => [
           ...prev, 
-          `Language set to ${normalizedInput === 'EN' ? 'English' : 'Dutch'} / Taal ingesteld op ${normalizedInput === 'EN' ? 'Engels' : 'Nederlands'}`
+          normalizedInput === 'EN' ? 'Language set to English' : 'Taal ingesteld op Nederlands'
         ])
         
         // Store language preference in localStorage
