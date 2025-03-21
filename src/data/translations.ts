@@ -29,7 +29,7 @@ export interface TranslationData {
 export const translations: TranslationData = {
   about: {
     en: "As a recent graduate in Software Engineering, I have built a strong foundation in both front- and back-end development. I am highly motivated and driven to grow both professionally and personally, pushing my introverted self to become more communicative by gaining experience in Customer Service. I have experience in a wide variety of programming languages and thrive on problem-solving and teamwork.",
-    nl: "Als recent afgestudeerde in Software Engineering heb ik een sterke basis opgebouwd in zowel front- als back-end ontwikkeling. Ik ben zeer gemotiveerd en gedreven om zowel professioneel als persoonlijk te groeien, waarbij ik mijn introverte zelf push om communicatiever te worden door ervaring op te doen in klantenservice. Ik heb ervaring met een breed scala aan programmeertalen en floreer in probleemoplossing en teamwerk."
+    nl: "Als recent afgestudeerde in Software Engineering heb ik een sterke basis opgebouwd in zowel front- als back-end ontwikkeling. Ik ben zeer gemotiveerd en gedreven om zowel professioneel als persoonlijk te groeien, waarbij ik mijn introverte zelf push om communicatiever te worden door ervaring op te doen in klantenservice. Ik heb ervaring met een breed scala aan programmeertalen. Ik ben gedreven om probleemoplossend te werken en me in te zetten in teamsverband."
   },
   location: {
     en: "The Hague",
