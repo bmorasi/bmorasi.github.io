@@ -9,7 +9,8 @@ export const useWindowManagement = ({ initialWindows }: UseWindowManagementProps
   const [windows, setWindows] = useState<WindowType[]>(initialWindows)
 
   const toggleWindow = (windowId: string) => {
-    setWindows(windows.map(window => {
+    // Use prevWindows to ensure we're working with the latest state
+    setWindows(prevWindows => prevWindows.map(window => {
       if (window.id === windowId) {
         return { ...window, isOpen: !window.isOpen }
       }
@@ -36,7 +37,8 @@ export const useWindowManagement = ({ initialWindows }: UseWindowManagementProps
       const offsetX = e.clientX - rect.left
       const offsetY = e.clientY - rect.top
       e.dataTransfer.setData('text/plain', windowId)
-      setWindows(windows.map(w => {
+      // Use prevWindows to ensure we're working with the latest state
+      setWindows(prevWindows => prevWindows.map(w => {
         if (w.id === windowId) {
           return { ...w, dragOffset: { x: offsetX, y: offsetY } }
         }
@@ -48,6 +50,7 @@ export const useWindowManagement = ({ initialWindows }: UseWindowManagementProps
   const handleWindowDrag = (e: React.DragEvent, windowId: string) => {
     e.preventDefault()
     
+    // Use the current state to find the window
     const window = windows.find(w => w.id === windowId)
     if (!window) return
     
@@ -55,8 +58,8 @@ export const useWindowManagement = ({ initialWindows }: UseWindowManagementProps
     const x = e.clientX
     const y = e.clientY
     
-    // Update window position in state
-    setWindows(windows.map(w => {
+    // Update window position in state using prevWindows to ensure we're working with the latest state
+    setWindows(prevWindows => prevWindows.map(w => {
       if (w.id === windowId) {
         return { ...w, position: { x, y } }
       }
@@ -74,7 +77,8 @@ export const useWindowManagement = ({ initialWindows }: UseWindowManagementProps
     const x = e.clientX - rect.left - window.dragOffset.x
     const y = e.clientY - rect.top - window.dragOffset.y
 
-    setWindows(windows.map(w => {
+    // Use prevWindows to ensure we're working with the latest state
+    setWindows(prevWindows => prevWindows.map(w => {
       if (w.id === windowId) {
         return { ...w, position: { x, y }, dragOffset: undefined }
       }

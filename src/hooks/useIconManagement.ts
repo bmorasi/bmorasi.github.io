@@ -11,17 +11,31 @@ export const useIconManagement = ({ initialIcons }: UseIconManagementProps) => {
   const handleIconDragStart = (e: React.DragEvent, iconId: string) => {
     const icon = icons.find(i => i.id === iconId)
     if (icon) {
-      const rect = (e.target as HTMLElement).getBoundingClientRect()
-      const offsetX = e.clientX - rect.left
-      const offsetY = e.clientY - rect.top
-      e.dataTransfer.setData('text/plain', `icon:${iconId}`)
+      // Add null check for e.target before accessing getBoundingClientRect
+      const target = e.target as HTMLElement
+      if (!target) {
+        // If target is undefined, use default values
+        e.dataTransfer.setData('text/plain', `icon:${iconId}`)
+        return
+      }
       
-      setIcons(icons.map(i => {
-        if (i.id === iconId) {
-          return { ...i, dragOffset: { x: offsetX, y: offsetY } }
-        }
-        return i
-      }))
+      try {
+        const rect = target.getBoundingClientRect()
+        const offsetX = e.clientX - rect.left
+        const offsetY = e.clientY - rect.top
+        e.dataTransfer.setData('text/plain', `icon:${iconId}`)
+        
+        setIcons(icons.map(i => {
+          if (i.id === iconId) {
+            return { ...i, dragOffset: { x: offsetX, y: offsetY } }
+          }
+          return i
+        }))
+      } catch (error) {
+        // If getBoundingClientRect fails, just set the data transfer
+        console.warn('Error in drag start:', error)
+        e.dataTransfer.setData('text/plain', `icon:${iconId}`)
+      }
     }
   }
 

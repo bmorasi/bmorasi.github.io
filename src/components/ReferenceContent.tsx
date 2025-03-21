@@ -16,7 +16,9 @@ export const ReferenceContent = ({
       {referenceItem.titles.map((title, index) => (
         <p key={index}>{title}</p>
       ))}
-      <p>{referenceItem.contact}</p>
+      {referenceItem.contact.map((contactInfo, index) => (
+        <p key={`contact-${index}`}>{contactInfo}</p>
+      ))}
     </div>
   )
 }

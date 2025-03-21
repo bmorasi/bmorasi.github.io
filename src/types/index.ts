@@ -22,6 +22,6 @@ export interface ReferenceItem {
   id: string
   name: string
   titles: string[]
-  contact: string
+  contact: string[]
   content?: React.ReactNode
 }

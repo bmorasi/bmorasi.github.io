@@ -33,10 +33,51 @@ export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, 
     }
   }
 
+  // Handle touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // For single tap, treat as click
+    const handleTouchEnd = (endEvent: TouchEvent) => {
+      // Prevent default to avoid double-firing with click events
+      endEvent.preventDefault();
+      
+      // If this was a short tap without much movement, treat as a click
+      onClick(icon.id);
+      
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+    
+    // For drag operations
+    const handleTouchMove = (moveEvent: TouchEvent) => {
+      // If we detect significant movement, cancel the click and start drag operation
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchmove', handleTouchMove);
+      
+      // Create a synthetic drag event
+      const touch = e.touches[0];
+      const syntheticEvent = {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        dataTransfer: {
+          setData: () => {}
+        },
+        preventDefault: () => {},
+        stopPropagation: () => {}
+      } as unknown as React.DragEvent<HTMLDivElement>;
+      
+      // Call the drag start handler
+      onDragStart(syntheticEvent, icon.id);
+    };
+    
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+  };
+  
   return (
     <div
       className="desktop-icon"
       data-type={icon.type || 'file'}
+      data-icon-id={icon.id}
       style={{
         gridRow: icon.gridPosition.row + 1,
         gridColumn: icon.gridPosition.col + 1
@@ -45,6 +86,7 @@ export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, 
       draggable
       onDragStart={(e) => onDragStart(e, icon.id)}
       onDragEnd={onDragEnd}
+      onTouchStart={handleTouchStart}
     >
       <div className="desktop-icon-image">
         <span>{getIconEmoji()}</span>

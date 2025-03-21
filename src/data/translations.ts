@@ -12,7 +12,7 @@ export interface ReferenceItem {
   id?: string
   name: string
   titles: string[]
-  contact: string
+  contact: string[]
 }
 
 export interface TranslationData {
@@ -42,7 +42,8 @@ export const translations: TranslationData = {
         "Frontend: React, Vue.js, HTML5, CSS3",
         "Backend: Node.js, .NET",
         "Database: SQL, MongoDB",
-        "Tools: Git, SCRUM, Agile"
+        "Tools: Git, SCRUM, Agile",
+        "Other: Salesforce, XML, Frameworks"
       ]]
     ],
     nl: [
@@ -51,16 +52,17 @@ export const translations: TranslationData = {
         "Frontend: React, Vue.js, HTML5, CSS3",
         "Backend: Node.js, .NET",
         "Database: SQL, MongoDB",
-        "Tools: Git, SCRUM, Agile"
+        "Tools: Git, SCRUM, Agile",
+        "Overig: Salesforce, XML, Frameworks"
       ]]
     ]
   },
   experience: {
     en: [
-      ["Customer Contact Employee @ KYC", "January 2024 - present", [
+      ["Customer Contact Employee KYC @ NN Bank", "January 2024 - present", [
         "As a customer contact employee, I work with my colleagues to maintain customers in identifying personal data through digital guidance.",
         "- Soft skills: Solution-oriented, patience, customer focus, communication",
-        "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git"
+        "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git, Salesforce"
       ]],
       ["Software Engineer Intern @ Air Innovations", "October 2023 - April 2024", [
         "As a Software Engineer intern, I independently worked in an Agile environment on an interactive feature of a full-stack application where users can explore a flight simulator in a 3D environment.",
@@ -79,23 +81,23 @@ export const translations: TranslationData = {
       ]]
     ],
     nl: [
-      ["Klantcontract medewerker @ KYC", "januari 2024 - heden", [
-        "Als klantcontact medewerker onderhoud ik samen met mijn collega's klanten bij het identificeren van persoonsgegevens door digitale begeleiding.",
+      ["Klantcontract medewerker KYC @ NN Bank", "januari 2024 - heden", [
+        " Als klantcontact medewerker ondersteun ik samen met mijn collega's klanten bij het identificeren van persoonsgegevens door digitale begeleiding te bieden via een technische tooling waarbij het beheersen van de gehanteerde techniek en het inzicht hebben waar klanten technisch over struikelen van belang is. Dit doe ik met een focus op klantvriendelijkheid en nauwkeurigheid. Daarbij draag ik actief bij aan de verbetering van systemen door issues te signaleren en door te geven.",
         "- Soft skills: Oplossingsgericht, geduld, klantgerichtheid, communicatie",
-        "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git"
+        "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git, Salesforce"
       ]],
-      ["Software Engineer stagiair @ Air Innovations", "oktober 2023 - april 2024", [
-        "Als stagair Software Engineer heb ik zelfstandig in een Agile omgeving gewerkt aan een interactieve feature van een full-stack applicatie waarmee gebruikers in een 3D-omgeving een vliegsimuator kunnen verkennen.",
+      ["Software Engineer Stagiair @ Air Innovations", "oktober 2023 - april 2024", [
+        "Als stagair Software Engineer heb ik zelfstanding in een Agile omgeving gewerkt aan een prototype feature van een full-stack applicatie waarmee gebruikers in een 3D-omgeving een vliegtuigmotor kunnen verkennen. De applicatie bevat interactieve functionaliteiten, zoals het opvragen van informatie over specifieke motoronderdelen.",
         "- Soft skills: Stressbestendig, kritisch denken, gericht research, zelfstandig werken",
         "- Hard skills: JavaScript, HTML & CSS, Three.JS, Vue.JS, Git"
       ]],
       ["Junior Software Engineer @ Air Innovations", "juni 2023 - oktober 2023", [
-        "Als Junior Software Engineer heb ik in een Agile omgeving gewerkt aan het onderhouden van een full-stack webapplicatie dat gebruikt werd voor het navigeren van luchtvaartuigen en bijhorende onderdelen.",
+        " Als Junior Software Engineer heb ik in een Agile omgeving gewerkt aan het onderhouden van een full-stack webapplicatie dat gebruikt wordt voor het toevoegen van kunstmatige intelligentie aan het onderhouden van vliegtuig motoren. In de font-end gebruik gemaakt van JavaScript, HTML & CSS, waarbij er aandacht besteed wordt aan de gebruiksvriendelijkheid voor de eindgebruikers. In de back-end gebruik gemaakt van Python.",
         "- Soft skills: Kritisch communiceren, stressbestendig, kritisch denken, SCRUM",
         "- Hard skills: Python, JavaScript, HTML & CSS, Vue.JS, Git"
       ]],
       ["Software Engineer stagiaire @ Air Innovations", "2022 - 2022", [
-        "Als stagiair Software Engineer heb ik aan een full-stack applicatie gewerkt aan een applicatie voor een technisch product dat kunstmatige intelligentie gebruikt om het onderhoud van vliegtuigmotoren.",
+        "Als stagair Software Engineer heb ik in een Agile omgeving gewerkt aan een nieuwe functie voor een bestaand product dat kunstmatige intelligentie toepast op het onderhoud van vliegtuigmotoren. Voor de front-end is JavaScript, HTML en CSS gebruikt, met focus op gebruiksvriendelijkheid voor de eindgebruikers. De back-end is ontwikkeld in Python en GStreamer, en de front- en back-end zijn gekoppeld met REDIS. Voor continuous development en versiebeheer heb ik gebruik gemaakt van GIT.",
         "- Soft skills: oplossingsgericht denken, creatief denken",
         "- Hard skills: Python, JavaScript, HTML & CSS, Vue.JS, Git"
       ]]
@@ -127,22 +129,22 @@ export const translations: TranslationData = {
     en: [
       ["Fritjoff Büttner", "", [
         "Principal Engineer @ Air Innovations",
-        "+49777477047387 / fritjoff.buttner@aiir.nl"
+        "+49777477047387",
+        "fritjoff.buttner@aiir.nl"
       ]],
       ["Gertie de Jong-Sinnige", "", [
-        "Manager Identificatie en Verificatie",
-        "KYC @ ING Bank",
+        "Manager Identification and Verification KYC @ NN Bank",
         "+31622804750"
       ]]
     ],
     nl: [
       ["Fritjoff Büttner", "", [
         "Principal Engineer @ Air Innovations",
-        "+49777477047387 / fritjoff.buttner@aiir.nl"
+        "+49777477047387",
+        "fritjoff.buttner@aiir.nl"
       ]],
       ["Gertie de Jong-Sinnige", "", [
-        "Manager Identificatie en Verificatie",
-        "KYC @ ING Bank",
+        "Manager Identificatie en Verificatie KYC @ NN Bank",
         "+31622804750"
       ]]
     ]

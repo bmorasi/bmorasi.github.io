@@ -9,9 +9,28 @@ import { Language } from './types/language'
 import { CVContent } from './components/CVContent'
 import { ReferenceContent } from './components/ReferenceContent'
 import { createReferenceItems } from './utils/referenceUtils'
+import { LoadingScreen } from './components/LoadingScreen'
+import { TutorialOverlay } from './components/TutorialOverlay'
+import './styles/TutorialOverlay.css'
+import './styles/mobile.css'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const [language, setLanguage] = useState<Language>('nl')
+  const [showTutorial, setShowTutorial] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
+  // Check if this is the first visit and show tutorial automatically
+  useEffect(() => {
+    // Only check after loading is complete
+    if (!isLoading) {
+      const hasSeenTutorial = localStorage.getItem('hasSeenTutorial')
+      if (!hasSeenTutorial) {
+        // Show tutorial on first visit
+        setShowTutorial(true)
+      }
+    }
+  }, [isLoading])
   
   // Create a toggleLanguage function
   const toggleLanguage = () => {
@@ -147,15 +166,21 @@ function App() {
     if (!referenceItem) return
     
     // Check if a window for this reference already exists
-    const existingWindowIndex = windows.findIndex(w => w.id === itemId)
+    const existingWindowIndex = windows.findIndex(w => w.id.startsWith(`window-${itemId}-`))
     
     if (existingWindowIndex >= 0) {
       // Toggle existing window
-      toggleWindow(itemId)
+      toggleWindow(windows[existingWindowIndex].id)
     } else {
+      // Generate a unique window ID with timestamp and random string to ensure uniqueness
+      // This prevents duplicate keys when the same reference is opened multiple times
+      const timestamp = Date.now()
+      const randomStr = Math.random().toString(36).substring(2, 8)
+      const windowId = `window-${itemId}-${timestamp}-${randomStr}`
+      
       // Create a new window for the reference item using our custom hook
       createWindow({
-        id: itemId,
+        id: windowId,
         title: referenceItem.name,
         content: <ReferenceContent referenceItem={referenceItem} />,
         position: { x: 150, y: 150 },
@@ -164,27 +189,62 @@ function App() {
     }
   }
   
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
   return (
     <div className="app-container">
-      <button 
-        className="language-toggle" 
-        onClick={toggleLanguage}
-      >
-        {language.toUpperCase()}
-      </button>
-      
-      <Desktop
-        icons={icons}
-        windows={windows}
-        onIconDragStart={handleIconDragStart}
-        onIconClick={toggleWindow}
-        onIconDragEnd={handleIconDragEnd}
-        onWindowDragStart={handleWindowDragStart}
-        onWindowDrag={handleWindowDrag}
-        onWindowClose={toggleWindow}
-        onWindowResize={handleWindowResize}
-        onIconDrop={handleIconDrop}
-      />
+      {isLoading ? (
+        <LoadingScreen onLoadingComplete={(selectedLanguage) => {
+          setIsLoading(false)
+          // Update language if user selected one
+          if (selectedLanguage) {
+            setLanguage(selectedLanguage)
+          } else {
+            // Check if there's a stored preference
+            const storedLanguage = localStorage.getItem('preferredLanguage') as Language
+            if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'nl')) {
+              setLanguage(storedLanguage)
+            }
+          }
+        }} />
+      ) : (
+        <>      
+          <div className="top-buttons">
+            <button className="language-toggle" onClick={toggleLanguage}>
+              {language === 'en' ? 'EN' : 'NL'}
+            </button>
+            <button className="help-button" onClick={() => setShowTutorial(true)}>
+              ?
+            </button>
+          </div>
+          
+          <Desktop
+            icons={icons}
+            windows={windows}
+            onIconDragStart={handleIconDragStart}
+            onIconClick={toggleWindow}
+            onIconDragEnd={handleIconDragEnd}
+            onWindowDragStart={handleWindowDragStart}
+            onWindowDrag={handleWindowDrag}
+            onWindowClose={toggleWindow}
+            onWindowResize={handleWindowResize}
+            onIconDrop={handleIconDrop}
+          />
+          
+          <TutorialOverlay 
+            language={language} 
+            onClose={() => {
+              setShowTutorial(false)
+              // Save that user has seen the tutorial
+              localStorage.setItem('hasSeenTutorial', 'true')
+            }} 
+            isVisible={showTutorial} 
+          />
+        </>
+      )}
     </div>
   )
 }

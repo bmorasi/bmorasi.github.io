@@ -53,21 +53,29 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
     e.preventDefault();
     e.stopPropagation();
     
+    // Set resizing state immediately
     setResizing(true);
     setResizeDirection(direction);
     setStartPos({ x: e.clientX, y: e.clientY });
     setStartWindowPos({ x: window.position.x, y: window.position.y });
     
+    // Get current window dimensions immediately
     if (windowRef.current) {
+      const currentWidth = windowRef.current.offsetWidth;
+      const currentHeight = windowRef.current.offsetHeight;
+      
       setStartSize({
-        width: windowRef.current.offsetWidth,
-        height: windowRef.current.offsetHeight
+        width: currentWidth,
+        height: currentHeight
       });
+      
+      // Apply cursor style immediately
+      windowRef.current.style.cursor = `${direction}-resize`;
     }
     
-    // Add event listeners for resize
-    document.addEventListener('mousemove', handleResize);
-    document.addEventListener('mouseup', handleResizeEnd);
+    // Add event listeners for resize with the capture phase for better responsiveness
+    document.addEventListener('mousemove', handleResize, { capture: true });
+    document.addEventListener('mouseup', handleResizeEnd, { capture: true })
   };
   
   const handleResize = (e: MouseEvent): void => {
@@ -97,9 +105,19 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
     newWidth = Math.max(300, newWidth);
     newHeight = Math.max(200, newHeight);
     
-    // Calculate position adjustments
-    const adjustedX = resizeDirection.includes('w') ? newX : window.position.x;
-    const adjustedY = resizeDirection.includes('n') ? newY : window.position.y;
+    // Calculate position adjustments, but prevent repositioning when minimum size is reached
+    let adjustedX = window.position.x;
+    let adjustedY = window.position.y;
+    
+    // Only adjust X position if we're resizing from the west edge and we haven't hit minimum width
+    if (resizeDirection.includes('w') && newWidth > 300) {
+      adjustedX = newX;
+    }
+    
+    // Only adjust Y position if we're resizing from the north edge and we haven't hit minimum height
+    if (resizeDirection.includes('n') && newHeight > 200) {
+      adjustedY = newY;
+    }
     
     // Update window dimensions and position
     if (windowRef.current) {
@@ -136,15 +154,20 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
   
   const handleResizeEnd = () => {
     setResizing(false);
-    document.removeEventListener('mousemove', handleResize);
-    document.removeEventListener('mouseup', handleResizeEnd);
+    // Reset cursor style
+    if (windowRef.current) {
+      windowRef.current.style.cursor = 'default';
+    }
+    // Remove event listeners with capture option to match how they were added
+    document.removeEventListener('mousemove', handleResize, { capture: true });
+    document.removeEventListener('mouseup', handleResizeEnd, { capture: true });
   };
   
   // Clean up event listeners on unmount
   useEffect(() => {
     return () => {
-      document.removeEventListener('mousemove', handleResize);
-      document.removeEventListener('mouseup', handleResizeEnd);
+      document.removeEventListener('mousemove', handleResize, { capture: true });
+      document.removeEventListener('mouseup', handleResizeEnd, { capture: true });
     };
   }, [resizing]);
   
@@ -171,6 +194,15 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
       };
       
       const handleMouseUp = () => {
+        // Get the final position after dragging
+        if (windowRef.current) {
+          const finalX = parseInt(windowRef.current.style.left, 10) || window.position.x;
+          const finalY = parseInt(windowRef.current.style.top, 10) || window.position.y;
+          
+          // Notify parent component about position change
+          notifyPositionChange(finalX, finalY);
+        }
+        
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
       };
@@ -180,10 +212,55 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
     }
   };
   
+  // Handle touch events for mobile devices
+  const handleHeaderTouchStart = (e: React.TouchEvent) => {
+    if (resizing) return;
+    
+    // Only allow dragging from the header
+    if ((e.target as HTMLElement).closest('.window-header')) {
+      const rect = windowRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      
+      const touch = e.touches[0];
+      const offsetX = touch.clientX - rect.left;
+      const offsetY = touch.clientY - rect.top;
+      
+      const handleTouchMove = (moveEvent: TouchEvent) => {
+        moveEvent.preventDefault(); // Prevent scrolling while dragging
+        const touch = moveEvent.touches[0];
+        const x = touch.clientX - offsetX;
+        const y = touch.clientY - offsetY;
+        
+        if (windowRef.current) {
+          windowRef.current.style.left = `${x}px`;
+          windowRef.current.style.top = `${y}px`;
+        }
+      };
+      
+      const handleTouchEnd = () => {
+        // Get the final position after dragging
+        if (windowRef.current) {
+          const finalX = parseInt(windowRef.current.style.left, 10) || window.position.x;
+          const finalY = parseInt(windowRef.current.style.top, 10) || window.position.y;
+          
+          // Notify parent component about position change
+          notifyPositionChange(finalX, finalY);
+        }
+        
+        document.removeEventListener('touchmove', handleTouchMove as EventListener);
+        document.removeEventListener('touchend', handleTouchEnd);
+      };
+      
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchend', handleTouchEnd);
+    }
+  };
+  
   return (
     <div
       ref={windowRef}
       className="window"
+      data-window-id={window.id}
       style={{
         left: `${window.position.x}px`,
         top: `${window.position.y}px`,
@@ -192,7 +269,7 @@ export const Window: FC<WindowProps> = ({ window, onDrag, onClose, onResize }) =
         cursor: resizing ? `${resizeDirection}-resize` : 'default'
       }}
     >
-      <div className="window-header" onMouseDown={handleHeaderMouseDown}>
+      <div className="window-header" onMouseDown={handleHeaderMouseDown} onTouchStart={handleHeaderTouchStart}>
         <div className="window-title">{window.title}</div>
         <div className="window-controls">
           <div className="window-control" onClick={() => onClose(window.id)} />
