@@ -59,39 +59,39 @@ export const translations: TranslationData = {
   },
   experience: {
     en: [
-      ["Customer Contact Employee KYC @ NN Bank", "January 2024 - present", [
-        "As a customer contact employee, I work with my colleagues to maintain customers in identifying personal data through digital guidance.",
-        "- Soft skills: Solution-oriented, patience, customer focus, communication",
+      ["Customer Contact Representative KYC @ NN Bank", "June 2024 - Present", [
+        "As a customer contact representative, I support customers along with my colleagues in verifying personal data by providing digital guidance through a technical tool. Mastering the technology used and understanding where customers face technical difficulties is essential. I focus on customer friendliness and accuracy. Additionally, I actively contribute to system improvements by identifying and reporting issues.",
+        "- Soft skills: Problem-solving, patience, customer focus, communication",
         "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git, Salesforce"
       ]],
       ["Software Engineer Intern @ Air Innovations", "October 2023 - April 2024", [
-        "As a Software Engineer intern, I independently worked in an Agile environment on an interactive feature of a full-stack application where users can explore a flight simulator in a 3D environment.",
-        "- Soft skills: Stress resistant, critical thinking, focused research, independent work",
+        "As a Software Engineer intern, I worked independently in an Agile environment on a prototype feature of a full-stack application that allows users to explore an aircraft engine in a 3D environment. The application includes interactive functionalities, such as retrieving information about specific engine components.",
+        "- Soft skills: Resilience, critical thinking, targeted research, independent work",
         "- Hard skills: JavaScript, HTML & CSS, Three.JS, Vue.JS, Git"
       ]],
       ["Junior Software Engineer @ Air Innovations", "June 2023 - October 2023", [
-        "As a Junior Software Engineer, I worked in an Agile environment on maintaining a full-stack web application used for navigating aircraft and associated components.",
-        "- Soft skills: Critical communication, stress resistant, critical thinking, SCRUM",
+        "As a Junior Software Engineer, I worked in an Agile environment on maintaining a full-stack web application used to integrate artificial intelligence into aircraft engine maintenance. The front-end was built using JavaScript, HTML & CSS, with a strong focus on user-friendliness for end users. The back-end was developed using Python.",
+        "- Soft skills: Critical communication, resilience, critical thinking, SCRUM",
         "- Hard skills: Python, JavaScript, HTML & CSS, Vue.JS, Git"
       ]],
       ["Software Engineer Intern @ Air Innovations", "2022 - 2022", [
-        "As a Software Engineer intern, I worked on a full-stack application for a technical product that uses artificial intelligence for aircraft engine maintenance.",
-        "- Soft skills: solution-oriented thinking, creative thinking",
+        "As a Software Engineer intern, I worked in an Agile environment on a new feature for an existing product that applies artificial intelligence to aircraft engine maintenance. The front-end was developed using JavaScript, HTML & CSS, with a focus on user-friendliness for end users. The back-end was built using Python and GStreamer, and the front-end and back-end were connected via REDIS. For continuous development and version control, I used GIT.",
+        "- Soft skills: Problem-solving, creative thinking",
         "- Hard skills: Python, JavaScript, HTML & CSS, Vue.JS, Git"
       ]]
     ],
     nl: [
-      ["Klantcontract medewerker KYC @ NN Bank", "januari 2024 - heden", [
+      ["Klantcontract medewerker KYC @ NN Bank", "Juni 2024 - heden", [
         " Als klantcontact medewerker ondersteun ik samen met mijn collega's klanten bij het identificeren van persoonsgegevens door digitale begeleiding te bieden via een technische tooling waarbij het beheersen van de gehanteerde techniek en het inzicht hebben waar klanten technisch over struikelen van belang is. Dit doe ik met een focus op klantvriendelijkheid en nauwkeurigheid. Daarbij draag ik actief bij aan de verbetering van systemen door issues te signaleren en door te geven.",
         "- Soft skills: Oplossingsgericht, geduld, klantgerichtheid, communicatie",
         "- Hard skills: JavaScript, HTML & CSS, TypeScript, Vue.JS, Git, Salesforce"
       ]],
-      ["Software Engineer Stagiair @ Air Innovations", "oktober 2023 - april 2024", [
+      ["Software Engineer Stagiair @ Air Innovations", "Oktober 2023 - April 2024", [
         "Als stagair Software Engineer heb ik zelfstanding in een Agile omgeving gewerkt aan een prototype feature van een full-stack applicatie waarmee gebruikers in een 3D-omgeving een vliegtuigmotor kunnen verkennen. De applicatie bevat interactieve functionaliteiten, zoals het opvragen van informatie over specifieke motoronderdelen.",
         "- Soft skills: Stressbestendig, kritisch denken, gericht research, zelfstandig werken",
         "- Hard skills: JavaScript, HTML & CSS, Three.JS, Vue.JS, Git"
       ]],
-      ["Junior Software Engineer @ Air Innovations", "juni 2023 - oktober 2023", [
+      ["Junior Software Engineer @ Air Innovations", "Juni 2023 - Oktober 2023", [
         " Als Junior Software Engineer heb ik in een Agile omgeving gewerkt aan het onderhouden van een full-stack webapplicatie dat gebruikt wordt voor het toevoegen van kunstmatige intelligentie aan het onderhouden van vliegtuig motoren. In de font-end gebruik gemaakt van JavaScript, HTML & CSS, waarbij er aandacht besteed wordt aan de gebruiksvriendelijkheid voor de eindgebruikers. In de back-end gebruik gemaakt van Python.",
         "- Soft skills: Kritisch communiceren, stressbestendig, kritisch denken, SCRUM",
         "- Hard skills: Python, JavaScript, HTML & CSS, Vue.JS, Git"
@@ -106,22 +106,22 @@ export const translations: TranslationData = {
   education: {
     en: [
       ["HBO-ICT", "The Hague University of Applied Sciences, 2019-2024", [
-        "Focus on Software Engineering and Development"
+        "Bachelor's degree in Software Engineering"
       ]],
       ["Languages", "", [
-        "Dutch - native",
+        "Dutch - fluent",
         "English - fluent",
-        "Tamil - good"
+        "Thais - good"
       ]]
     ],
     nl: [
       ["HBO-ICT", "Haagse Hogeschool, 2019-2024", [
-        "Focus op Software Engineering en Development"
+        "Bachelor's degree in Software Engineering"
       ]],
       ["Talen", "", [
-        "Nederlands - moedertaal",
+        "Nederlands - vloeiend",
         "Engels - vloeiend",
-        "Tamil - goed"
+        "Thais - goed"
       ]]
     ]
   },
@@ -151,30 +151,30 @@ export const translations: TranslationData = {
   },
   projects: {
     en: [
-      ["Estanged Manor", "2022", [
-        "A videogame in Unity in the theme of 3D Thriller/Puzzle on PC.",
+      ["Estranged Manor", "2022", [
+        "Created a video game as part of a team in the genre of a 3D horror/thriller platformer for PC. Used Unity and worked in a team of 8 within an Agile environment using SCRUM.",
         "- Soft skills: teamwork, effective communication",
         "- Hard skills: C#, SCRUM"
       ]],
-      ["Neighborhood App", "2020-2021", [
-        "Worked in a small team to create a web application where neighborhood residents can communicate with each other and organize events. Used .NET for both backend and frontend to retrieve data.",
+      ["Neighborhood Application", "2020-2021", [
+        "Worked in a small team to develop a web application that allows neighborhood residents to communicate and share local experiences. Used .NET for the backend. The frontend was built using Bootstrap, HTML & CSS, with a focus on the website's user-friendliness.",
         "- Soft skills: teamwork, effective communication",
         "- Hard skills: .NET frameworks, Bootstrap"
       ]],
       ["The Challenge", "2019-2020", [
-        "Created a mobile application in Android Studio using Java and XML.",
+        "Developed a mobile application in Android Studio using Java and XML.",
         "- Soft skills: teamwork, effective communication",
         "- Hard skills: Android Studio, Java, XML"
       ]]
     ],
     nl: [
       ["Estanged Manor", "2022", [
-        "Een programmeerspel met een 3D horror/thriller platform op PC. Hierbij is gebruik gemaakt van Unity en veel C# SCRUM.",
+        " In groepsverband een video-game gemaakt in de genre van 3D horror/thriller platformer op PC. Hierbij gebruik gemaakt van Unity, en in een groep van 8 gewerkt in een Agile omgeving met gebruik van SCRUM.",
         "- Soft skills: teamwerk, effectieve communicatie",
         "- Hard skills: C#, SCRUM"
       ]],
       ["Buurt Applicatie", "2020-2021", [
-        "In een kleine groep gewerkt aan het maken van een webapplicatie, waarbij buurtbewoners met elkaar kunnen communiceren en evenementen kunnen organiseren. Hierbij is gebruik gemaakt van .NET voor de backend en frontend om data op te halen.",
+        " In een kleine groep gewerkt met het maken van een webapplicatie, waarbij buurtbewoners met elkaar kunnen communiceren en ervaringen uit de buurt kunnen delen. Gebruik gemaakt van .NET voor de backend. In de frontend is er gebruik gemaakt van Bootstrap, HTML & CSS, waarbij er rekening gehouden is met de gebruiksvriendelijkheid van de website. ",
         "- Soft skills: teamwerk, effectieve communicatie",
         "- Hard skills: .NET frameworks, Bootstrap"
       ]],
