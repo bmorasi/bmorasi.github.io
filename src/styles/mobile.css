@@ -21,13 +21,11 @@
     overflow: auto;
   }
   
-  /* Desktop adjustments */
   .desktop, .base-desktop {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr 1fr;
-    padding: 10px;
-    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+    gap: 10px;
     overflow-y: auto;
     height: auto;
     min-height: 100vh;
@@ -39,11 +37,24 @@
     height: 90px;
     margin: 5px;
     touch-action: manipulation;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
   
   .desktop-icon-image {
     width: 40px;
     height: 40px;
+  }
+  
+  .desktop-icon span {
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   /* Window adjustments */
@@ -178,13 +189,46 @@
   .window-title {
     font-size: 0.9rem;
   }
-  
-  /* Fix for name display in CV */
-  .typing-effect {
+
+  .typing-effect, .typewriter-text h1 {
     font-size: 1.8rem;
     width: auto !important;
     white-space: normal !important;
     overflow: visible !important;
+    word-wrap: break-word !important;
+    display: block !important;
+  }
+  
+  .header p {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+  
+  .desktop, .base-desktop {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 10px;
+    justify-items: center;
+  }
+  
+  .desktop-icon {
+    width: 65px;
+    height: 75px;
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .desktop-icon span {
+    font-size: 0.8rem;
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   /* Improve contact info display */
@@ -197,29 +241,28 @@
   .desktop, .base-desktop {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 15px;
+    gap: 8px;
+    padding: 0;
+    justify-items: center;
   }
   
-  /* Fix for name display in CV */
-  .typing-effect {
-    font-size: 1.8rem;
-    width: auto !important;
-    white-space: normal !important;
-    overflow: visible !important;
+  /* Improve icon positioning and text display */
+  .desktop-icon {
+    width: 65px;
+    height: 75px;
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
-  /* Improve contact info display */
-  .header p {
-    font-size: 0.9rem;
+  .desktop-icon span {
+    font-size: 0.8rem;
+    text-align: center;
     word-break: break-word;
-  }
-  
-  /* Improve desktop grid layout */
-  .desktop, .base-desktop {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 15px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
