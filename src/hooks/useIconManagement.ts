@@ -11,10 +11,8 @@ export const useIconManagement = ({ initialIcons }: UseIconManagementProps) => {
   const handleIconDragStart = (e: React.DragEvent, iconId: string) => {
     const icon = icons.find(i => i.id === iconId)
     if (icon) {
-      // Add null check for e.target before accessing getBoundingClientRect
       const target = e.target as HTMLElement
       if (!target) {
-        // If target is undefined, use default values
         e.dataTransfer.setData('text/plain', `icon:${iconId}`)
         return
       }
@@ -32,7 +30,6 @@ export const useIconManagement = ({ initialIcons }: UseIconManagementProps) => {
           return i
         }))
       } catch (error) {
-        // If getBoundingClientRect fails, just set the data transfer
         console.warn('Error in drag start:', error)
         e.dataTransfer.setData('text/plain', `icon:${iconId}`)
       }

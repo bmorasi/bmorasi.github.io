@@ -192,7 +192,6 @@ export const BaseDesktop = ({
         gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
         gridTemplateRows: 'repeat(auto-fill, minmax(120px, 1fr))',
         gap: '10px',
-        padding: '20px',
         position: 'relative'
       }}>
       {children}
