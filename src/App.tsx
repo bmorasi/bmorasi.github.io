@@ -18,7 +18,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [language, setLanguage] = useState<Language>('nl')
   const [showTutorial, setShowTutorial] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   
   // Check if this is the first visit and show tutorial automatically
   useEffect(() => {
@@ -187,11 +186,6 @@ function App() {
         isOpen: true
       })
     }
-  }
-  
-  // Toggle mobile menu
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
   return (
