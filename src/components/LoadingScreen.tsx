@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import '../styles/LoadingScreen.css'
 import { Language } from '../types/language'
 
@@ -14,6 +14,9 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
   const [showLanguagePrompt, setShowLanguagePrompt] = useState(false)
   const [languageInput, setLanguageInput] = useState('')
   const [languageSelected, setLanguageSelected] = useState(false)
+  
+  // Reference to the input element for focusing
+  const inputRef = useRef<HTMLInputElement>(null)
   
   const command = 'npm run portfolio.exe'
   
@@ -71,6 +74,16 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
     }
   }, [])
   
+  // Focus the input field when language prompt appears
+  useEffect(() => {
+    if (showLanguagePrompt && !languageSelected && inputRef.current) {
+      // Small delay to ensure the input is rendered
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
+    }
+  }, [showLanguagePrompt, languageSelected])
+  
   // Handle language input
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!showLanguagePrompt || languageSelected) return
@@ -87,13 +100,10 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
           normalizedInput === 'EN' ? 'Language set to English' : 'Taal ingesteld op Nederlands'
         ])
         
-        // Store language preference in localStorage
         localStorage.setItem('preferredLanguage', selectedLanguage)
         
-        // Complete loading after confirmation
         setTimeout(() => onLoadingComplete(selectedLanguage), 1000)
       } else {
-        // Invalid input
         setExecutionOutput(prev => [
           ...prev, 
           'Invalid selection. Please type "EN" or "NL" / Ongeldige selectie. Typ "EN" of "NL"'
@@ -103,17 +113,33 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
     } else if (e.key === 'Backspace') {
       setLanguageInput(prev => prev.slice(0, -1))
     } else if (e.key.length === 1) {
-      // Only allow letters
-      const isLetter = /^[a-zA-Z]$/.test(e.key)
-      if (isLetter && languageInput.length < 2) {
-        setLanguageInput(prev => prev + e.key)
+      if (/^[a-zA-Z]$/.test(e.key)) {
+        setLanguageInput(prev => (prev + e.key).slice(-2))
       }
+    }
+  }
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!showLanguagePrompt || languageSelected) return
+    
+    if (e.nativeEvent instanceof InputEvent && e.nativeEvent.inputType === 'insertText' && e.nativeEvent.data && /^[a-zA-Z]$/.test(e.nativeEvent.data)) {
+      return;
+    }
+    
+    const sanitizedValue = e.target.value.replace(/[^a-zA-Z]/g, '').slice(-2)
+    setLanguageInput(sanitizedValue)
+  }
+  
+  // Focus input field when tapped on terminal (for mobile)
+  const handleTerminalTap = () => {
+    if (showLanguagePrompt && !languageSelected && inputRef.current) {
+      inputRef.current.focus()
     }
   }
   
   return (
     <div className="loading-screen" tabIndex={0} onKeyDown={handleKeyDown}>
-      <div className="terminal">
+      <div className="terminal" onClick={handleTerminalTap}>
         <div className="terminal-header">
           <div className="terminal-title">Command Prompt</div>
         </div>
@@ -133,6 +159,20 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
                   <span className="prompt">C:\Users\Guest&gt;</span>
                   <span className="command">{languageInput}</span>
                   {showCursor && <span className="cursor">_</span>}
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={languageInput}
+                    onChange={handleInputChange}
+                    className="hidden-input"
+                    autoCapitalize="characters"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    maxLength={2}
+                    aria-label="Language selection"
+                    inputMode="text"
+                  />
                 </div>
               )}
             </div>

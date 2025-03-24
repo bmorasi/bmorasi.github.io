@@ -7,10 +7,6 @@ import { BaseDesktop } from './BaseDesktop'
  * that can be embedded within other components, such as folder views.
  * It has a reduced feature set compared to the full Desktop component.
  */
-
-/**
- * Props for the MiniDesktop component
- */
 interface MiniDesktopProps {
   /** Array of desktop icons to display */
   icons: DesktopIconType[]
@@ -49,7 +45,6 @@ export const MiniDesktop = ({
   className = '',
   children
 }: MiniDesktopProps) => {
-  // Handle icon drag start
   const handleIconDragStart = (e: React.DragEvent, iconId: string) => {
     if (onIconDragStart) {
       onIconDragStart(e, iconId);
@@ -58,14 +53,12 @@ export const MiniDesktop = ({
     }
   };
   
-  // Handle icon drag end
   const handleIconDragEnd = () => {
     if (onIconDragEnd) {
       onIconDragEnd();
     }
   };
   
-  // Handle window drag start
   const handleWindowDragStart = (e: React.DragEvent, windowId: string) => {
     const window = windows.find(w => w.id === windowId);
     if (!window) return;
@@ -73,11 +66,8 @@ export const MiniDesktop = ({
     e.dataTransfer.setData('text/plain', windowId);
   };
   
-  // Handle window drag
   const handleWindowDrag = (e: React.DragEvent, windowId: string) => {
     e.preventDefault();
-    
-    // Update window position if handler is provided
     if (onWindowPositionUpdate) {
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -100,11 +90,8 @@ export const MiniDesktop = ({
         onWindowClose={onWindowClose}
         onWindowResize={onWindowPositionUpdate ? 
           (windowId) => {
-            // Find the window to get its current position
             const window = windows.find(w => w.id === windowId);
             if (window) {
-              // Update both dimensions and maintain position
-              // We need to pass the current position to ensure it's maintained
               onWindowPositionUpdate(windowId, window.position.x, window.position.y);
             }
           } : 

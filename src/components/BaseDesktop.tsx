@@ -3,37 +3,21 @@ import { Window as WindowType, DesktopIcon as DesktopIconType } from '../types'
 import { DesktopIcon } from './DesktopIcon'
 import { Window } from './Window'
 
-/**
- * Props for the BaseDesktop component
- */
+
 interface BaseDesktopProps {
-  /** Array of desktop icons to display */
   icons: DesktopIconType[]
-  /** Array of windows to display */
   windows: WindowType[]
-  /** Handler for icon click events */
   onIconClick: (iconId: string) => void
-  /** Handler for window close events */
   onWindowClose: (windowId: string) => void
-  /** Handler for icon drag start events */
   onIconDragStart?: (e: React.DragEvent, iconId: string) => void
-  /** Handler for icon drag end events */
   onIconDragEnd?: () => void
-  /** Handler for window drag start events */
   onWindowDragStart?: (e: React.DragEvent, windowId: string) => void
-  /** Handler for window drag events */
   onWindowDrag?: (e: React.DragEvent, windowId: string) => void
-  /** Handler for window resize events */
   onWindowResize?: (windowId: string, width: number, height: number) => void
-  /** Handler for icon drag over events */
   onIconDragOver?: (e: React.DragEvent) => void
-  /** Handler for icon drop events */
   onIconDrop?: (e: React.DragEvent) => void
-  /** Whether drag and drop is enabled */
   enableDragDrop?: boolean
-  /** Additional CSS class name */
   className?: string
-  /** Child elements */
   children?: ReactNode
 }
 
@@ -119,17 +103,13 @@ export const BaseDesktop = ({
     const col = Math.floor(relX / cellWidth)
     const row = Math.floor(relY / cellHeight)
     
-    // Always show drop indicator at valid positions, even if occupied
-    // This helps users see where the icon will be placed
+    // Show drop indicator at valid positions for visual feedback
     if (col >= 0 && col < numColumns && row >= 0 && row < numRows) {
-      // Check if there's an icon at this position (for visual feedback)
       const targetIcon = icons.find(icon => 
         icon.id !== draggedIconId && 
         icon.gridPosition.row === row && 
         icon.gridPosition.col === col
       )
-      
-      // Set drop indicator with information about whether position is occupied
       setDropIndicator({ 
         row, 
         col,
@@ -147,13 +127,11 @@ export const BaseDesktop = ({
     
     const data = e.dataTransfer.getData('text/plain')
     
-    // Check if this is a window drop
     if (data && !data.startsWith('icon:')) {
       const windowId = data
       const window = windows.find(w => w.id === windowId)
       
       if (window && onWindowDrag) {
-        // Pass the drop event to the window drag handler
         onWindowDrag(e, windowId)
       }
     }
@@ -162,7 +140,6 @@ export const BaseDesktop = ({
       onIconDrop(e)
     }
     
-    // Reset drag state
     setDraggedIconId(null)
     setDropIndicator(null)
   }
@@ -206,7 +183,6 @@ export const BaseDesktop = ({
         />
       ))}
       
-      {/* Visual indicator for drop position */}
       {enableDragDrop && dropIndicator && draggedIconId && (
         <div 
           className={`drop-indicator ${dropIndicator.isOccupied ? 'occupied' : ''}`}

@@ -5,10 +5,6 @@ import { DesktopIcon as DesktopIconType } from '../types'
  * DesktopIcon component that displays an icon on the desktop
  * with drag and drop functionality.
  */
-
-/**
- * Props for the DesktopIcon component
- */
 interface DesktopIconProps {
   /** Icon data object */
   icon: DesktopIconType
@@ -21,7 +17,6 @@ interface DesktopIconProps {
 }
 
 export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, onDragEnd }) => {
-  // Determine icon emoji based on type
   const getIconEmoji = () => {
     switch(icon.type) {
       case 'folder':
@@ -33,27 +28,19 @@ export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, 
     }
   }
 
-  // Handle touch events for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    // For single tap, treat as click
     const handleTouchEnd = (endEvent: TouchEvent) => {
-      // Prevent default to avoid double-firing with click events
       endEvent.preventDefault();
-      
-      // If this was a short tap without much movement, treat as a click
       onClick(icon.id);
       
       document.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('touchmove', handleTouchMove);
     };
     
-    // For drag operations
     const handleTouchMove = () => {
-      // If we detect significant movement, cancel the click and start drag operation
       document.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('touchmove', handleTouchMove);
       
-      // Create a synthetic drag event
       const touch = e.touches[0];
       const syntheticEvent = {
         clientX: touch.clientX,
@@ -65,7 +52,6 @@ export const DesktopIcon: FC<DesktopIconProps> = ({ icon, onDragStart, onClick, 
         stopPropagation: () => {}
       } as unknown as React.DragEvent<HTMLDivElement>;
       
-      // Call the drag start handler
       onDragStart(syntheticEvent, icon.id);
     };
     

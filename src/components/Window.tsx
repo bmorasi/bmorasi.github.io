@@ -5,10 +5,6 @@ import { Window as WindowType } from '../types'
  * Window component that provides a draggable and resizable window
  * with a header, content area, and resize handles.
  */
-
-/**
- * Props for the Window component
- */
 interface WindowProps {
   window: WindowType
   onDragStart: (e: React.DragEvent, windowId: string) => void

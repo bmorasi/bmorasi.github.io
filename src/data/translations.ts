@@ -25,7 +25,6 @@ export interface TranslationData {
   projects: Record<Language, ContentTuple[]>
 }
 
-// Translation data
 export const translations: TranslationData = {
   about: {
     en: "As a recent graduate in Software Engineering, I have built a strong foundation in both front- and back-end development. I am highly motivated and driven to grow both professionally and personally, pushing my introverted self to become more communicative by gaining experience in Customer Service. I have experience in a wide variety of programming languages and thrive on problem-solving and teamwork.",

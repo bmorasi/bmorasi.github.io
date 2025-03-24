@@ -19,33 +19,25 @@ function App() {
   const [language, setLanguage] = useState<Language>('nl')
   const [showTutorial, setShowTutorial] = useState(false)
   
-  // Check if this is the first visit and show tutorial automatically
   useEffect(() => {
-    // Only check after loading is complete
     if (!isLoading) {
       const hasSeenTutorial = localStorage.getItem('hasSeenTutorial')
       if (!hasSeenTutorial) {
-        // Show tutorial on first visit
         setShowTutorial(true)
       }
     }
   }, [isLoading])
   
-  // Create a toggleLanguage function
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === 'en' ? 'nl' : 'en'))
   }
 
-  // Initialize icons with useIconManagement hook
   const initialIcons: Array<DesktopIconType> = [
     { id: 'cv', title: 'resume.txt', type: 'file', position: { x: 20, y: 20 }, gridPosition: { row: 0, col: 0 } },
     { id: 'references', title: language === 'en' ? 'references' : 'referenties', type: 'folder', position: { x: 20, y: 150 }, gridPosition: { row: 1, col: 0 } }
   ]
   
-  // Reference items for folder view
   const [referenceItems, setReferenceItems] = useState<ReferenceItem[]>([])
-  
-  // Use the icon management hook to handle drag and drop
   const { 
     icons, 
     setIcons,
@@ -54,12 +46,10 @@ function App() {
     handleIconDrop,
   } = useIconManagement({ initialIcons })
   
-  // Update reference items when language changes
   useEffect(() => {
     setReferenceItems(createReferenceItems(language))
   }, [language])
   
-  // Update icons when language changes
   useEffect(() => {
     const updatedIcons = icons.map(icon => {
       if (icon.id === 'references') {
@@ -72,12 +62,10 @@ function App() {
     })
     
     if (JSON.stringify(icons) !== JSON.stringify(updatedIcons)) {
-      // Only update if there's an actual change
       setIcons(updatedIcons)
     }
   }, [language, icons])
 
-  // Initialize windows with useWindowManagement hook
   const initialWindows: WindowType[] = [
     {
       id: 'cv',
@@ -122,7 +110,6 @@ function App() {
     createWindow
   } = useWindowManagement({ initialWindows })
   
-  // Update windows when language changes
   useEffect(() => {
     setWindows(prevWindows => prevWindows.map(window => {
       if (window.id === 'references') {
@@ -149,7 +136,6 @@ function App() {
           )
         }
       } else if (window.id === 'cv') {
-        // Update CV window with new language prop
         return {
           ...window,
           content: <CVContent language={language} />
@@ -160,24 +146,18 @@ function App() {
   }, [language, referenceItems])
   
   const handleReferenceItemClick = (itemId: string) => {
-    // Find the reference item by ID
     const referenceItem = referenceItems.find(item => item.id === itemId)
     if (!referenceItem) return
     
-    // Check if a window for this reference already exists
     const existingWindowIndex = windows.findIndex(w => w.id.startsWith(`window-${itemId}-`))
     
     if (existingWindowIndex >= 0) {
-      // Toggle existing window
       toggleWindow(windows[existingWindowIndex].id)
     } else {
       // Generate a unique window ID with timestamp and random string to ensure uniqueness
-      // This prevents duplicate keys when the same reference is opened multiple times
       const timestamp = Date.now()
       const randomStr = Math.random().toString(36).substring(2, 8)
       const windowId = `window-${itemId}-${timestamp}-${randomStr}`
-      
-      // Create a new window for the reference item using our custom hook
       createWindow({
         id: windowId,
         title: referenceItem.name,
@@ -193,11 +173,9 @@ function App() {
       {isLoading ? (
         <LoadingScreen onLoadingComplete={(selectedLanguage) => {
           setIsLoading(false)
-          // Update language if user selected one
           if (selectedLanguage) {
             setLanguage(selectedLanguage)
           } else {
-            // Check if there's a stored preference
             const storedLanguage = localStorage.getItem('preferredLanguage') as Language
             if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'nl')) {
               setLanguage(storedLanguage)
@@ -232,7 +210,6 @@ function App() {
             language={language} 
             onClose={() => {
               setShowTutorial(false)
-              // Save that user has seen the tutorial
               localStorage.setItem('hasSeenTutorial', 'true')
             }} 
             isVisible={showTutorial} 
