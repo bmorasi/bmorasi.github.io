@@ -193,10 +193,18 @@
   .typing-effect, .typewriter-text h1 {
     font-size: 1.8rem;
     width: auto !important;
-    white-space: normal !important;
+    white-space: nowrap !important;
     overflow: visible !important;
-    word-wrap: break-word !important;
-    display: block !important;
+    word-wrap: normal !important;
+    display: inline-block !important;
+  }
+  
+  .typewriter-text {
+    width: auto !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    display: inline-block !important;
+    border-right: .05em solid #0f0;
   }
   
   .header p {

@@ -70,6 +70,23 @@
   }
 }
 
+/* Hidden input for mobile keyboard */
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  height: 1px;
+  width: 1px;
+  z-index: -1;
+  pointer-events: none;
+  clip: rect(0, 0, 0, 0);
+  touch-action: manipulation;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: inherit;
+}
+
 .loading-message {
   margin-top: 20px;
 }
@@ -119,6 +136,8 @@
   align-items: center;
   margin-top: 16px;
   animation: fadeIn 0.3s forwards;
+  min-height: 20px; /* Fixed height to prevent layout shifts */
+  position: relative; /* Ensure proper positioning of children */
 }
 
 .npm-line {
@@ -163,13 +182,36 @@
   .output-line {
     font-size: 14px;
     margin-bottom: 6px;
+    min-height: 20px;
+    line-height: 20px;
+  }
+  
+  .command-line {
+    min-height: 20px;
+    line-height: 20px;
+    position: relative;
+  }
+  
+  .language-input-line {
+    min-height: 20px;
+    line-height: 20px;
+  }
+  
+  /* Improve hidden input for mobile */
+  .hidden-input {
+    position: absolute;
+    opacity: 0;
+    height: 1px;
+    width: 1px;
+    z-index: 1; /* Changed from -1 to ensure it's tappable */
+    pointer-events: auto; /* Allow interaction */
+    touch-action: manipulation;
   }
 }
 
 @media screen and (max-width: 480px) {
   .terminal {
     width: 95%;
-    height: 300px;
   }
   
   .terminal-header {
@@ -187,9 +229,29 @@
   .output-line {
     font-size: 12px;
     margin-bottom: 5px;
+    min-height: 18px;
+    line-height: 18px;
+  }
+  
+  .command-line {
+    min-height: 18px;
+    line-height: 18px;
+    position: relative;
+  }
+  
+  .language-input-line {
+    min-height: 18px;
+    line-height: 18px;
+    position: relative;
   }
   
   .loading-bar {
     height: 15px;
+  }
+  
+  /* Ensure cursor is properly aligned on mobile */
+  .cursor {
+    line-height: inherit;
+    vertical-align: middle;
   }
 }
